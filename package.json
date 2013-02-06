@@ -2,6 +2,6 @@
     "name": "todo-mvc",
     "version": "1.0.0",
     "dependencies": {
-        "montage" : "0.12.x"
+        "montage" : "0.12.3"
     }
 }
