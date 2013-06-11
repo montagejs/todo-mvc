@@ -1,7 +1,11 @@
 {
     "name": "todo-mvc",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "dependencies": {
-        "montage" : "0.12.4"
-    }
+        "montage" : "0.13.0",
+        "matte": "0.1.1",
+        "native": "0.1.1"
+    },
+    "bundle": [ "ui/main.reel" ],
+    "shard": 4
 }

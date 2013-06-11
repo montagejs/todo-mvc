@@ -1,185 +1,178 @@
-<!doctype html>
-<!-- <copyright>
-Copyright (c) 2012, Motorola Mobility LLC.
-All Rights Reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-* Neither the name of Motorola Mobility LLC nor the names of its
-  contributors may be used to endorse or promote products derived from this
-  software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-</copyright> -->
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Main Component</title>
+    <title>Main</title>
+
     <link rel="stylesheet" type="text/css" href="main.css">
 
-    <script type="text/montage-serialization">{
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "mainComponent"},
+                "newTodoForm": {"#": "newTodoForm"},
+                "newTodoInput": {"#": "new-todo"}
+            }
+        },
 
-            "tasksController": {
-                "prototype": "montage/ui/controller/array-controller",
-                "properties": {
+        "todoRepetition": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "todo-list"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.todoListController"}
+            }
+        },
 
-                },
-                "bindings": {
-                    "content": {"<->": "@owner.tasks"}
-                }
+        "todoView": {
+            "prototype": "ui/todo-view.reel",
+            "properties": {
+                "element": {"#": "todoView"}
             },
-            "taskNoteField": {
-                "prototype": "montage/ui/input-text.reel",
-                "properties": {
-                    "element": {
-                        "#": "taskNoteField"
-                    }
-                }
-            },
-            "taskEntry": {
-                "prototype": "ui/task-entry.reel",
-                "properties": {
-                    "element": {
-                        "#": "task"
-                    }
-                },
-                "bindings": {
-                    "task": {"<-": "@taskRepetition.objectAtCurrentIteration"}
-                }
-            },
-            "taskRepetition": {
-                "prototype": "montage/ui/repetition.reel",
-                "properties": {
-                    "element": {
-                        "#": "taskList"
-                    },
-                    "contentController": {
-                        "@": "tasksController"
-                    }
-                }
-            },
-            "unfinishedCount": {
-                "prototype": "montage/ui/dynamic-text.reel",
-                "properties": {
-                    "element": {
-                        "#": "unfinishedCount"
-                    },
-                    "converter": {"@": "itemCountConverter"}
-                },
-                "bindings": {
-                    "value": {"<-": "@owner.unfinishedTasks.count()"}
-                }
-            },
+            "bindings": {
+                "todo": {"<-": "@todoRepetition.objectAtCurrentIteration"}
+            }
+        },
 
-            "itemCountConverter": {
-                "prototype": "core/item-count-converter"
+        "main": {
+            "prototype": "matte/ui/dynamic-element.reel",
+            "properties": {
+                "element": {"#": "main"}
             },
-
-            "taskListControls": {
-                "prototype": "ui/task-list-controls.reel",
-                "properties": {
-                    "element": {
-                        "#": "taskListControls"
-                    }
-                },
-                "bindings": {
-                    "tasksController": {"<-": "@owner.tasksController"}
-                }
-            },
-
-            "markAllCompleteConditional": {
-                "prototype": "montage/ui/condition.reel",
-                "properties": {
-                    "element": {"#": "markAllCompleteForm"},
-                    "removalStrategy": "hide"
-                },
-                "bindings": {
-                    "condition": {"<-": "@owner.tasksController.organizedObjects.count()"}
-                }
-            },
-
-            "markAllCompleteButton": {
-                "prototype": "montage/ui/button.reel",
-                "properties": {
-                    "element": {"#": "markAllCompleteButton"}
-                },
-                "bindings": {
-                    "label": {"<-": "@owner.unfinishedTasks", "converter": {"@": "markAllReadValueConverter"}}
-                }
-            },
-
-            "markAllReadValueConverter": {
-                "prototype": "core/mark-all-read-value-converter"
-            },
-
-            "owner": {
-                "properties": {
-                    "element": {
-                        "#": "main"
-                    },
-                    "tasksController": {
-                        "@": "tasksController"
-                    },
-                    "taskForm": {
-                        "#": "taskForm"
-                    },
-                    "markAllCompleteForm": {
-                        "#": "markAllCompleteForm"
-                    },
-                    "taskNoteField": {
-                        "@": "taskNoteField"
-                    }
+            "bindings": {
+                "classList.has('visible')": {
+                    "<-": "@owner.todos.length > 0"
                 }
             }
+        },
 
-    }</script>
+        "footer": {
+            "prototype": "matte/ui/dynamic-element.reel",
+            "properties": {
+                "element": {"#": "footer"}
+            },
+            "bindings": {
+                "classList.has('visible')": {
+                    "<-": "@owner.todos.length > 0"
+                }
+            }
+        },
 
+        "toggleAllCheckbox": {
+            "prototype": "native/ui/input-checkbox.reel",
+            "properties": {
+                "element": {"#": "toggle-all"}
+            },
+            "bindings": {
+                "checked": {"<->": "@owner.allCompleted"}
+            }
+        },
+
+        "todoCount": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "todo-count"}
+            },
+            "bindings": {
+                "value": {
+                    "<-": "@owner.todosLeft.length"
+                }
+            }
+        },
+
+        "todoCountWording": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "todo-count-wording"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.todosLeft.length == 1 ? 'item' : 'items'"}
+            }
+        },
+
+        "completedCount": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "completed-count"}
+            },
+            "bindings": {
+                "value": {
+                    "<-": "@owner.todosCompleted.length"
+                }
+            }
+        },
+
+        "clearCompletedContainer": {
+            "prototype": "matte/ui/dynamic-element.reel",
+            "properties": {
+                "element": {"#": "clear-completed-container"}
+            },
+            "bindings": {
+                "classList.has('visible')": {
+                    "<-": "@owner.todosCompleted.length"
+                }
+            }
+        },
+
+        "clearCompletedButton": {
+            "prototype": "native/ui/button.reel",
+            "properties": {
+                "element": {"#": "clear-completed"}
+            },
+            "listeners": [
+                {
+                    "type": "action",
+                    "listener": {"@": "owner"},
+                    "capture": false
+                }
+            ]
+        }
+    }
+    </script>
 </head>
 <body>
+    <div data-montage-id="mainComponent">
 
-    <div data-montage-id="main" class="main">
-        <h1>Todos</h1>
-
-        <form data-montage-id="taskForm" class="taskForm">
-            <div>
-                <label><span>Task</span><input data-montage-id="taskNoteField" class="taskNoteField" type="text" placeholder="What needs to be done?" size="64"></label>
-                <input type="submit" value="Add">
-            </div>
-        </form>
-
-        <form data-montage-id="markAllCompleteForm">
-            <div><input type="submit" value="Mark all as complete" data-montage-id="markAllCompleteButton"></div>
-        </form>
-
-        <ul data-montage-id="taskList" class="taskList">
-            <li>
-                <div data-montage-id="task"></div>
-            </li>
-        </ul>
-
-        <div class="taskStats">
-            <span data-montage-id="unfinishedCount" class="unfinishedCount"></span> left
-            <div data-montage-id="taskListControls" class="taskListControls"></div>
-        </div>
+        <section id="todoapp">
+                <header id="header">
+                    <h1>todos</h1>
+                    <form data-montage-id="newTodoForm">
+                        <input data-montage-id="new-todo" id="new-todo" placeholder="What needs to be done?" autofocus>
+                    </form>
+                </header>
+                <section data-montage-id="main" id="main">
+                    <input data-montage-id="toggle-all" id="toggle-all" type="checkbox">
+                    <label for="toggle-all">Mark all as complete</label>
+                    <ul data-montage-id="todo-list" id="todo-list">
+                        <li data-montage-id="todoView"></li>
+                    </ul>
+                </section>
+                <footer data-montage-id="footer" id="footer">
+                    <span id="todo-count"><strong data-montage-id="todo-count">0</strong> <span data-montage-id="todo-count-wording">items</span> left</span>
+                    <ul id="filters">
+                        <li>
+                            <a href="#/">All</a>
+                        </li>
+                        <li>
+                            <a href="#/">Active</a>
+                        </li>
+                        <li>
+                            <a href="#/">Completed</a>
+                        </li>
+                    </ul>
+                    <div data-montage-id="clear-completed-container" id="clear-completed-container">
+                        <button data-montage-id="clear-completed" id="clear-completed">Clear completed (<span data-montage-id="completed-count">0</span>)</button>
+                    </div>
+                </footer>
+            </section>
+            <footer id="info">
+                <p>Double-click to edit a todo</p>
+                <p>Created with <a href="http://github.com/montagejs/montage">Montage</a> </p>
+                <p>Source available at <a href="http://github.com/montagejs/todo-mvc">Montage-TodoMVC</a> </p>
+                <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+            </footer>
     </div>
-
 </body>
 </html>

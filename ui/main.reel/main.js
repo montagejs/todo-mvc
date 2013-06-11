@@ -1,189 +1,178 @@
-/* <copyright>
-Copyright (c) 2012, Motorola Mobility LLC.
-All Rights Reserved.
+var Component = require("montage/ui/component").Component,
+    RangeController = require("montage/core/range-controller").RangeController,
+    Todo = require("core/todo").Todo,
+    Serializer = require("montage/core/serialization").Serializer,
+    Deserializer = require("montage/core/serialization").Deserializer,
+    LOCAL_STORAGE_KEY = "todos-montage";
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+exports.Main = Component.specialize({
 
-* Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
+    newTodoForm: {
+        value: null
+    },
 
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
+    newTodoInput: {
+        value: null
+    },
 
-* Neither the name of Motorola Mobility LLC nor the names of its
-  contributors may be used to endorse or promote products derived from this
-  software without specific prior written permission.
+    todoListController: {
+        value: null
+    },
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-</copyright> */
-var Montage = require("montage").Montage,
-    Component = require("montage/ui/component").Component,
-    Task = require("core/task").Task,
-    Serializer = require("montage/core/serializer").Serializer,
-    Deserializer = require("montage/core/deserializer").Deserializer,
-    LOCAL_STORAGE_KEY = "montage_todo_mvc_tasks";
+    didCreate: {
+        value: function() {
+            this.todoListController = new RangeController();
+            this.addPathChangeListener("todos.every{completed}", this, "handleTodosCompletedChanged");
 
-exports.Main = Montage.create(Component, {
+            this.defineBindings({
+                "todos": {"<-": "todoListController.organizedContent"},
+                "todosLeft": {"<-": "todos.filter{!completed}"},
+                "todosCompleted": {"<-": "todos.filter{completed}"}
+            });
+        }
+    },
 
     templateDidLoad: {
         value: function() {
-            if (localStorage) {
-                var tasksSerialization = localStorage.getItem(LOCAL_STORAGE_KEY);
+            this.load();
+        }
+    },
 
-                if (tasksSerialization) {
-                    var deserializer = Deserializer.create(),
+    load: {
+        value: function() {
+            if (localStorage) {
+                var todoSerialization = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+                if (todoSerialization) {
+                    var deserializer = new Deserializer(),
                         self = this;
-                    try {
-                        deserializer.initWithStringAndRequire(tasksSerialization, require).deserializeObject(function(tasks) {
-                            self.tasks = tasks;
-                        }, require);
-                    } catch(e) {
+
+                    deserializer.init(todoSerialization, require)
+                    .deserializeObject()
+                    .then(function(todos) {
+                        self.todoListController.initWithContent(todos);
+                    }).fail(function() {
                         console.error("Could not load saved tasks.");
-                        console.debug("Could not deserialize", tasksSerialization);
+                        console.debug("Could not deserialize", todoSerialization);
                         console.log(e.stack);
-                    }
+                    });
                 }
             }
         }
-    },
-
-    tasks: {
-        distinct: true,
-        value: []
-    },
-
-    unfinishedTasks: {
-        dependencies: ["tasks.completed"],
-        get: function() {
-
-            if (this.tasks) {
-                return this.tasks.filter(function(element) {
-                    return !element.completedDate;
-                });
-            }
-        }
-    },
-
-    tasksController: {
-        value: null
-    },
-
-    taskForm: {
-        value: null
-    },
-
-    _markAllCompleteForm: {
-        value: false
-    },
-
-    markAllCompleteForm: {
-        get: function() {
-            return this._markAllCompleteForm;
-        },
-        set: function(value) {
-            this._markAllCompleteForm = value;
-            this._markAllCompleteForm.identifier = "markAllComplete";
-        }
-    },
-
-    taskNoteField: {
-        value: null
-    },
-
-    prepareForDraw: {
-        value: function() {
-            if (window.Touch) {
-                this.element.classList.add("touch");
-            }
-
-            this.element.classList.remove("loading");
-
-            this.taskForm.addEventListener("submit", this, false);
-            this.markAllCompleteForm.addEventListener("submit", this, false);
-
-            // TODO not observe every possible key we care to trigger a save on
-            var self = this,
-                saveCallback = function() {
-                    self.save();
-                };
-
-            this.addPropertyChangeListener("tasks.completedDate", saveCallback, false);
-            this.addPropertyChangeListener("tasks.note", saveCallback, false);
-        }
-    },
-
-    handleSubmit: {
-        value: function(event) {
-            event.preventDefault();
-
-            var note = this.taskNoteField.value;
-
-            if (!note || note.match(/^\s+$/)) {
-                // Ignore null or completely blank entries
-                return;
-            }
-
-            this.tasksController.addObjects(Task.create().initWithNote(note));
-
-            this.taskNoteField.value = null;
-        }
-    },
-
-    handleMarkAllCompleteSubmit: {
-        value: function(event) {
-            event.preventDefault();
-
-            var i,
-                iTask,
-                allCompleted;
-
-            allCompleted = this.tasks.every(function(element) {
-                return element.completed;
-            });
-
-            for (i = 0; (iTask = this.tasks[i]); i++) {
-                iTask.completed = !allCompleted;
-            }
-
-        }
-    },
-
-    _saveTimeout: {
-        value: null
     },
 
     save: {
         value: function() {
             if (localStorage) {
+                var todos = this.todoListController.content,
+                    serializer = new Serializer().initWithRequire(require);
 
-                if (this._saveTimeout) {
-                    clearTimeout(this._saveTimeout);
-                    this._saveTimeout = null;
-                }
-
-                // TODO this would be replaced with a formal system for this eventually, just delaying it to
-                // not slow down rendering etc.
-
-                var tasks = this.tasks;
-
-                setTimeout(function() {
-                    var serializer = Serializer.create().initWithRequire(require);
-                    localStorage.setItem(LOCAL_STORAGE_KEY, serializer.serializeObject(tasks));
-                }, 50)
+                localStorage.setItem(LOCAL_STORAGE_KEY, serializer.serializeObject(todos));
             }
         }
-    }
+    },
 
+    enterDocument: {
+        value: function(firstTime) {
+            if (firstTime) {
+                this.newTodoForm.identifier = "newTodoForm";
+                this.newTodoForm.addEventListener("submit", this, false);
+
+                this.addEventListener("destroyTodo", this, true);
+
+                window.addEventListener("beforeunload", this, true);
+            }
+        }
+    },
+
+    captureDestroyTodo: {
+        value: function(evt) {
+            this.destroyTodo(evt.detail.todo);
+        }
+    },
+
+    createTodo: {
+        value: function(title) {
+            var todo = new Todo().initWithTitle(title);
+            this.todoListController.add(todo);
+            return todo;
+        }
+    },
+
+    destroyTodo: {
+        value: function(todo) {
+            this.todoListController.delete(todo);
+            return todo;
+        }
+    },
+
+    _allCompleted: {
+        value: null
+    },
+
+    allCompleted: {
+        get: function() {
+            return this._allCompleted;
+        },
+        set: function(value) {
+            this._allCompleted = value;
+            this.todoListController.organizedContent.forEach(function(member) {
+                member.completed = value;
+            });
+        }
+    },
+
+    todos: {
+        value: null
+    },
+
+    todosLeft: {
+        value: null
+    },
+
+    todosCompleted: {
+        value: null
+    },
+
+    // Handlers
+
+    handleNewTodoFormSubmit: {
+        value: function(evt) {
+            evt.preventDefault();
+
+            var title = this.newTodoInput.value.trim();
+
+            if ("" === title) {
+                return;
+            }
+
+            this.createTodo(title);
+            this.newTodoInput.value = null;
+        }
+    },
+
+    handleTodosCompletedChanged: {
+        value: function(value) {
+            this._allCompleted = value;
+            this.dispatchOwnPropertyChange("allCompleted", value);
+        }
+    },
+
+    handleClearCompletedButtonAction: {
+        value: function(evt) {
+            var completedTodos = this.todoListController.organizedContent.filter(function(todo) {
+                return todo.completed;
+            });
+
+            if (completedTodos.length > 0) {
+                this.todoListController.deleteEach(completedTodos);
+            }
+        }
+    },
+
+    captureBeforeunload: {
+        value: function() {
+            this.save();
+        }
+    }
 });
