@@ -1,9 +1,32 @@
-MontageJS TodoMVC
-===============
+# MontageJS TodoMVC Example
 
-This is a Montage implementation of the TodoMVC application.
-- Proper Routing is forthcoming when the feature is landed in the Montage project.
-- The project will be mopped prior to submitting to the main TodoMVC repository.
+This is a MontageJS implementation of the TodoMVC application.
 
-MontageJS Framework: https://github.com/montagejs/montage
-MontageJS TodoMVC: https://github.com/montagejs/todo-mvc
+MontageJS is a client-side HTML5 framework for building "thick client" single-page applications. It offers time-tested patterns and principles, a modular architecture, and a friendly method to achieve a clean separation of concerns.
+
+## Application Structure
+MontageJS applications follow a unified directory structure that makes it easy to look for and add files. The following table provides a brief description of the TodoMVC directory structure (which )of a MontageJS application. These are the files and directories that are installed when you are using `minit` to create a new app.
+
+Folder / File | Description |
+------------ | ------------- 
+assets | Contains global styles and the background image for the TodoMVC application.
+core | Contains .
+index.html | Is the entry-point HTML document.  
+LICENSE.md | Contains copyright information.
+package.json | Describes your app and its dependencies.  
+README.md | Describes the TodoMVC application. 
+ui | Contains the user interface components of the TodoMVC application. 
+
+## A Note about the Source
+You are looking at the nonminified source code of the application. MontageJS application development is divided into a development (creating the app) phase and a production (compiling the app) phase. During production—before submitting the application to the TodoMVC site—we use the Montage Optimizer (Mop) to minify the source code and create "bundles" (files) that consist of the application code and its dependencies, ready for deployment.
+
+## For More Information
+* MontageJS Framework: https://github.com/montagejs/montage
+* MontageJS FAQ: http://montagejs.org/docs/faq.html
+
+## Get Started with MontageJS
+
+* MontageJS Quick Start: http://montagejs.org/docs/montagejs-setup.html
+* MontageJS Demos: http://montagejs.org/docs/montagejs-examples.html
+* MontageJS Docs: http://montagejs.org/docs/
+
