@@ -2,7 +2,7 @@
 
 This is a MontageJS implementation of the TodoMVC application.
 
-MontageJS is a client-side HTML5 framework for building rich single-page applications. It offers MV*-style patterns, a modular architecture, and a friendly method to achieve a clean separation of concerns.
+MontageJS is a client-side HTML5 framework for building rich single-page applications. It offers time-tested patterns and principles, a modular architecture, and a friendly method to achieve a clean separation of concerns.
 
 ## Application Structure
 MontageJS applications follow a unified directory structure that makes it easy to look for and add files. The following table provides a brief description of the TodoMVC directory structure.
