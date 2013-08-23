@@ -19,8 +19,8 @@ exports.Main = Component.specialize({
         value: null
     },
 
-    didCreate: {
-        value: function() {
+    constructor: {
+        value: function Main () {
             this.todoListController = new RangeController();
             this.addPathChangeListener("todos.every{completed}", this, "handleTodosCompletedChanged");
 
