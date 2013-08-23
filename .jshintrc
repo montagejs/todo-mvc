@@ -1,0 +1,41 @@
+{
+    "bitwise": true,
+    "camelcase": true,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "noarg": true,
+    "noempty": true,
+    "nonew": true,
+    "undef": true,
+    "unused": "paramsignore",
+    "trailing": true,
+    "indent": 4,
+    "boss": true,
+    "eqnull": true,
+    "browser": true,
+    "maxcomplexity": 10,
+    "globals": {
+        "CustomEvent": true,
+        "WebSocket": false,
+
+        "require": false,
+        "exports": false,
+
+        "jasmine": true,
+        "beforeEach": false,
+        "afterEach": false,
+        "describe": false,
+        "xdescribe": false,
+        "it": false,
+        "xit": false,
+        "expect": false,
+        "spyOn": false,
+
+        "WeakMap": true,
+        "Map": true,
+        "Set": true,
+
+        "console": false
+    }
+}
