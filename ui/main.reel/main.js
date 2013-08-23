@@ -7,11 +7,11 @@ var Component = require("montage/ui/component").Component,
 
 exports.Main = Component.specialize({
 
-    newTodoForm: {
+    _newTodoForm: {
         value: null
     },
 
-    newTodoInput: {
+    _newTodoInput: {
         value: null
     },
 
@@ -75,8 +75,8 @@ exports.Main = Component.specialize({
     enterDocument: {
         value: function(firstTime) {
             if (firstTime) {
-                this.newTodoForm.identifier = "newTodoForm";
-                this.newTodoForm.addEventListener("submit", this, false);
+                this._newTodoForm.identifier = "newTodoForm";
+                this._newTodoForm.addEventListener("submit", this, false);
 
                 this.addEventListener("destroyTodo", this, true);
 
@@ -140,14 +140,14 @@ exports.Main = Component.specialize({
         value: function(evt) {
             evt.preventDefault();
 
-            var title = this.newTodoInput.value.trim();
+            var title = this._newTodoInput.value.trim();
 
             if ("" === title) {
                 return;
             }
 
             this.createTodo(title);
-            this.newTodoInput.value = null;
+            this._newTodoInput.value = null;
         }
     },
 
