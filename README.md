@@ -11,7 +11,7 @@ Here are some links you may find helpful:
 
 * [Quick Start](http://montagejs.org/docs/montagejs-setup.html)
 * [Demos](http://montagejs.org/docs/montagejs-examples.html)
-* [API Reference](http://montagejs.org/api/)
+* [API Reference](http://montagejs.org/apis/)
 * [Applications built with MontageJS](http://montagejs.org/apps/)
 * [Blog](http://montagejs.org/blog/)
 * [FAQ](http://montagejs.org/docs/faq.html)
