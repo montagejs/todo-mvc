@@ -31,7 +31,7 @@ Get help from other Framework Name users:
 
 
 ## Application Structure
-MontageJS applications follow a unified directory structure that makes it easy to look for and add files. The following table provides a brief description of the TodoMVC directory structure.
+MontageJS applications follow a unified directory structure that makes it easy to look for and add files. The following table provides a brief description of the TodoMVC application's directory structure.
 
 Folder / File | Description |
 ------------ | ------------- 
@@ -49,8 +49,8 @@ To run the TodoMVC example locally, you must have Node.js and npm installed. Mon
 
 1. Clone the todo-mvc [GitHub repo](https://github.com/montagejs/todo-mvc) in your desktop.
 2. Use your command line tool to cd to the cloned todo-mvc directory.
-3. Run `npm install .`. (This installs MontageJS so you can run the app.)
-4. Spin up an HTTP server and visit http://localhost/.../myexample/.
+3. Run `npm install .`. (This installs MontageJS so you can run the TodoMVC app.)
+4. Spin up your preferred HTTP server and point your browser to the associated port.
 
 
 ## A Note about the Source
