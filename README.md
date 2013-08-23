@@ -49,7 +49,7 @@ To run the TodoMVC example locally, you must have Node.js and npm installed. Mon
 
 1. Clone the todo-mvc [GitHub repo](https://github.com/montagejs/todo-mvc) in your desktop.
 2. Use your command line tool to cd to the cloned todo-mvc directory.
-3. Run `npm install .`. (This installs the MontageJS so you can run the app)
+3. Run `npm install .`. (This installs MontageJS so you can run the app.)
 4. Spin up an HTTP server and visit http://localhost/.../myexample/.
 
 
