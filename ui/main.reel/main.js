@@ -50,7 +50,7 @@ exports.Main = Component.specialize({
                     deserializer.init(todoSerialization, require)
                     .deserializeObject()
                     .then(function(todos) {
-                        self.todoListController.initWithContent(todos);
+                        self.todoListController.content = todos;
                     }).fail(function() {
                         console.error("Could not load saved tasks.");
                         console.debug("Could not deserialize", todoSerialization);
