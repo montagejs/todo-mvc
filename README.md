@@ -11,7 +11,7 @@ Here are some links you may find helpful:
 
 * [Quick Start](http://montagejs.org/docs/montagejs-setup.html)
 * [Demos](http://montagejs.org/docs/montagejs-examples.html)
-* [API Reference](http://montagejs.org/apis/)
+* [API Reference](http://montagejs.org/api/)
 * [Applications built with MontageJS](http://montagejs.org/apps/)
 * [Blog](http://montagejs.org/blog/)
 * [FAQ](http://montagejs.org/docs/faq.html)
@@ -48,11 +48,18 @@ ui | Contains the user interface components of the TodoMVC application, main.ree
 To run the TodoMVC example locally, you must have Node.js and npm installed. MontageJS application development depends on npm, the Node package manager, which is distributed with Node.js. If you haven't done so already, be sure to [download](http://nodejs.org/download/) and run the prebuilt Node.js installer for your platform from the Node.js website. Then follow these steps:
 
 1. Clone the todo-mvc [GitHub repo](https://github.com/montagejs/todo-mvc) in your desktop.
-2. Use your command line tool to cd to the cloned todo-mvc directory.
-3. Run `npm install .`. (This installs MontageJS so you can run the TodoMVC app.)
-4. Spin up your preferred HTTP server and point your browser to the associated port.
+2. Use your command line tool to navigate to the cloned todo-mvc directory and install the modules required to run the demo:
 
+   ```
+   cd demo
+   npm update
+   ```
+   
+3. Spin up your preferred HTTP server and point your browser to the associated port.
 
+    > During development MontageJS applications rely on XHR to load their various components and modules, which is why you will need a web server to serve the demo.
+    > If you happen to have [minit](https://github.com/montagejs/minit), the Montage Initializer, installed (`npm install minit -g`) you can run `minit serve` from within the demo directory to set up a server on demand.
+    
 ## A Note about the Source
 You are looking at the nonminified source code of the application. MontageJS application development is divided into a development (creating the app) phase and a production (compiling the app) phase. During production—before submitting the application to the TodoMVC site—we use the Montage Optimizer (Mop) to minify the source code and create "bundles" (files) that consist of the application code and its dependencies, ready for deployment.
 
