@@ -51,7 +51,7 @@ To run the TodoMVC example locally, you must have Node.js and npm installed. Mon
 2. Use your command line tool to navigate to the cloned todo-mvc directory and install the modules required to run the demo:
 
    ```
-   cd demo
+   cd todo-mvc
    npm update
    ```
    
