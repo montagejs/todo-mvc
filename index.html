@@ -1,22 +1,27 @@
-<!DOCTYPE html>
-<html lang="en" id="montage-todomvc">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Montage • TodoMVC</title>
+<!doctype html>
+<html lang="en" data-framework="montage" id="montage-todomvc">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Montage • TodoMVC</title>
 
-    <link rel="stylesheet" href="assets/base.css" />
-    <link rel="stylesheet" href="assets/app.css" />
+        <link rel="stylesheet" href="bower_components/todomvc-common/base.css">
+        <link rel="stylesheet" href="assets/app.css">
+    </head>
+    <body>
+        <div data-montage-id="todo-container" id="todo-container"></div>
 
-    <script src="./node_modules/montage/montage.js"></script>
-    <script type="text/montage-serialization">
-    {
-        "owner": {
-            "prototype": "montage/ui/loader.reel"
-        }
-    }
-    </script>
-</head>
-<body>
-</body>
+        <script src="bower_components/todomvc-common/base.js"></script>
+        <script src="./node_modules/montage/montage.js"></script>
+        <script type="text/montage-serialization">
+            {
+                "owner": {
+                    "prototype": "montage/ui/loader.reel",
+                    "properties": {
+                        "element": {"#": "todo-container"}
+                    }
+                }
+            }
+        </script>
+    </body>
 </html>
