@@ -129,7 +129,7 @@ exports.TodoView = Component.specialize({
     draw: {
         value: function() {
             if (this.isEditing) {
-                this.editInput.element.select();
+                this.editInput.element.focus();
             } else {
                 this.editInput.element.blur();
             }
