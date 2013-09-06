@@ -45,7 +45,7 @@ ui | Contains the user interface components of the TodoMVC application, main.ree
 
 ## Running the TodoMVC Example
 
-To run the TodoMVC example locally, you must have Node.js and npm installed. MontageJS application development depends on npm, the Node package manager, which is distributed with Node.js. If you haven't done so already, be sure to [download](http://nodejs.org/download/) and run the prebuilt Node.js installer for your platform from the Node.js website. Then follow these steps:
+MontageJS application development depends on npm, the Node package manager, which is distributed with Node.js. If you haven't done so already, be sure to [download](http://nodejs.org/download/) and run the prebuilt Node.js installer for your platform from the Node.js website. Then, to run the TodoMVC example locally, follow these steps:
 
 1. Clone the todo-mvc [GitHub repo](https://github.com/montagejs/todo-mvc) in your desktop.
 2. Use your command line tool to navigate to the cloned todo-mvc directory and install the modules required to run the demo:
