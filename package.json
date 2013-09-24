@@ -1,6 +1,6 @@
 {
     "name": "todo-mvc",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "dependencies": {
         "montage" : "~0.13.5",
         "matte": "~0.1.3",
