@@ -22,7 +22,7 @@ Articles and guides from the community:
 * [YouTube - Getting Started](http://www.youtube.com/watch?v=JfT1ML200JI)
 * [My First MontageJS Application](http://renaun.com/blog/2013/05/my-first-montagejs-application/)
 
-Get help from other Framework Name users:
+Get help from other Montage users:
 
 * [IRC](http://webchat.freenode.net/?channels=montage)
 * [MontageJS on Google Groups](https://groups.google.com/forum/?hl=en&fromgroups#!forum/montagejs)
