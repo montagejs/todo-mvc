@@ -2,8 +2,8 @@
     "name": "todo-mvc",
     "version": "1.2.3",
     "dependencies": {
-        "montage" : "~0.13.5",
-        "matte": "~0.1.3",
+        "montage": "git+http://github.com/montagejs/montage.git#master",
+        "matte": "git+http://github.com/montagejs/matte.git#master",
         "native": "~0.1.2"
     },
     "bundle": [ "ui/main.reel" ],
