@@ -4,7 +4,9 @@
     "dependencies": {
         "montage": "git+http://github.com/montagejs/montage.git#master",
         "matte": "git+http://github.com/montagejs/matte.git#master",
-        "native": "~0.1.2"
+        "native": "~0.1.2",
+        "todomvc-app-css": "^1.0.0",
+        "todomvc-common": "^1.0.1"
     },
     "bundle": [ "ui/main.reel" ],
     "shard": 4

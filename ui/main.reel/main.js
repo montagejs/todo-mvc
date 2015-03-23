@@ -1,8 +1,8 @@
 var Component = require('montage/ui/component').Component;
 var RangeController = require('montage/core/range-controller').RangeController;
 var Todo = require('core/todo').Todo;
-var Serializer = require('montage/core/serialization').Serializer;
-var Deserializer = require('montage/core/serialization').Deserializer;
+var Serializer = require('montage/core/serialization/serializer/montage-serializer').MontageSerializer;
+var Deserializer = require('montage/core/serialization/deserializer/montage-deserializer').MontageDeserializer;
 var LOCAL_STORAGE_KEY = 'todos-montage';
 
 exports.Main = Component.specialize({
