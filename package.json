@@ -2,8 +2,8 @@
     "name": "todo-mvc",
     "version": "1.2.3",
     "dependencies": {
-        "montage": "git+http://github.com/montagejs/montage.git#master",
-        "matte": "git+http://github.com/montagejs/matte.git#master",
+        "montage": "0.14.15",
+        "matte": "0.2.0",
         "native": "~0.1.2",
         "todomvc-app-css": "^1.0.0",
         "todomvc-common": "^1.0.1"
