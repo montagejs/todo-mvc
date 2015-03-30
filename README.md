@@ -85,4 +85,4 @@ You are looking at the minified source code of the application. MontageJS applic
 
 ## Credit
 
-This TodoMVC application was created by [Montagejs](http://montagejs.org).
+This TodoMVC application was created by [Montage Studio](http://montagestudio.com).
