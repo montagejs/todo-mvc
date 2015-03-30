@@ -20,8 +20,10 @@ Here are some links you may find helpful:
 
 Articles and guides from the community:
 
-* [YouTube - Getting Started](http://www.youtube.com/watch?v=JfT1ML200JI)
+* [Screencast of SF HTML5 Live Code - Montage Studio with Ryan Paul](https://www.youtube.com/watch?v=aLT1ZmISKhw)
 * [My First MontageJS Application](http://renaun.com/blog/2013/05/my-first-montagejs-application/)
+* [Building a Simple Reddit Client with MontageJS](http://docs.montagestudio.com/montagejs/tutorial-reddit-client-with-montagejs.html)
+
 
 Get help from other Montage users:
 
@@ -40,7 +42,7 @@ assets | Contains global styles and the background image for the TodoMVC applica
 core | Contains the data model.
 index.html | Is the entry-point HTML document.  
 LICENSE.md | Contains copyright information.
-package.json | Describes your app and its dependencies.  
+package.json | Describes your app and its dependencies. MontageJS uses CommonJS.
 README.md | Describes the TodoMVC application. 
 ui | Contains the user interface components of the TodoMVC application, main.reel and todo-view.reel.
 
@@ -57,7 +59,7 @@ Working in Montage Studio is radically simplifying how you work on a project.
 
 4. Once loaded, you can launch the app by clicking the Play button right next to the project's name on the top left.
 
-5. To take a tour of Montage Studio, take a look [here](Take a tour of Montage Studio.)
+5. To take a tour of Montage Studio, take a look [here](http://docs.montagestudio.com/montage-studio/ide-at-a-glance.html)
 
 
 
