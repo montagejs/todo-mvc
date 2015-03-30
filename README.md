@@ -1,20 +1,21 @@
 # MontageJS TodoMVC Example
 
-> MontageJS is a client-side HTML5 framework for building rich single-page applications. It offers time-tested patterns and principles, a modular architecture, and a friendly method to achieve a clean separation of concerns.
+> MontageJS is a client-side HTML5 framework for building rich single-page applications. It offers time-tested patterns and principles, a modular architecture, and a web designer friendly method to achieve a clean separation of concerns. MontageJS is the open source HTML5 framework with a dedicated, cloud-based, visual authoring environment. If you have a GitHub account, you're ready to play in Montage Studio. And just like GitHub, Montage Studio is free to use for open source repos. In the studio you will discover an easier, faster way to develop single page applications that exceed user expectations on all screens. You can serve your app from your Montage Studio's session on the different target devices you care about. As you add, remove configure components to your project, or event edit the CSS, Montage Studio apply your changes in real time to connected devices running you app, through the cloud. Instant responsive feedback!
+
 > 
-> _[MontageJS - montagejs.org](http://montagejs.org)_
+> _[MontageJS - http://montagestudio.com/montagejs/](http://montagestudio.com/montagejs/)_
 
 ## Learning MontageJS
-The [MontageJS](http://montagejs.org) website is a great resource for getting started.
+The [Montage Studio](http://montagestudio.com/montagejs/) website is a great resource for getting started.
 
 Here are some links you may find helpful:
 
-* [Quick Start](http://montagejs.org/docs/montagejs-setup.html)
-* [Demos](http://montagejs.org/docs/montagejs-examples.html)
-* [API Reference](http://montagejs.org/api/)
-* [Applications built with MontageJS](http://montagejs.org/apps/)
-* [Blog](http://montagejs.org/blog/)
-* [FAQ](http://montagejs.org/docs/faq.html)
+* [Quick Start](http://docs.montagestudio.com/montagejs/montagejs-setup.html)
+* [Demos](http://docs.montagestudio.com/montagejs/montagejs-examples.html)
+* [API Reference](http://docs.montagestudio.com/api/Component.html)
+* [Applications built with MontageJS](http://montagestudio.com/gallery/)
+* [Blog](http://montagestudio.com/blog/)
+* [FAQ](http://docs.montagestudio.com/montagejs/faq.html)
 * [MontageJS on GitHub](https://github.com/montagejs/montage)
 
 Articles and guides from the community:
@@ -24,10 +25,10 @@ Articles and guides from the community:
 
 Get help from other Montage users:
 
-* [IRC](http://webchat.freenode.net/?channels=montage)
-* [MontageJS on Google Groups](https://groups.google.com/forum/?hl=en&fromgroups#!forum/montagejs)
-* [MontageJS on Twitter](http://twitter.com/montagejs)
-* [MontageJS on Google +](https://plus.google.com/116915300739108010954)
+* [Forum](http://forum.montagestudio.com/)
+* [Montage Studio on Twitter](http://twitter.com/montagejs)
+* [Montage Studio on Facebook](https://www.facebook.com/montagestudio)
+* [Montage Studio on Google +](https://plus.google.com/+Montagestudio/about)
 
 
 ## Application Structure
@@ -43,7 +44,24 @@ package.json | Describes your app and its dependencies.
 README.md | Describes the TodoMVC application. 
 ui | Contains the user interface components of the TodoMVC application, main.reel and todo-view.reel.
 
-## Running the TodoMVC Example
+
+## Running the TodoMVC Example in Montage Studio
+
+Working in Montage Studio is radically simplifying how you work on a project.
+
+1. Fork the todo-mvc [GitHub repo](https://github.com/montagejs/todo-mvc) in your GitHub account.
+
+2. If it's your first time, [please join our beta](http://montagestudio.com/reveal/). You'll receive an email with a link to get in Montage Studio. 
+
+3. In the list of montage projects on the right, click todo-mvc. Montage Studio will checkout the project from GitHub in a private  Docker container, npm install and then load the editor.
+
+4. Once loaded, you can launch the app by clicking the Play button right next to the project's name on the top left.
+
+5. To take a tour of Montage Studio, take a look [here](Take a tour of Montage Studio.)
+
+
+
+## Running the TodoMVC Example on your local system
 
 MontageJS application development depends on npm, the Node package manager, which is distributed with Node.js. If you haven't done so already, be sure to [download](http://nodejs.org/download/) and run the prebuilt Node.js installer for your platform from the Node.js website. Then, to run the TodoMVC example locally, follow these steps:
 
@@ -61,7 +79,7 @@ MontageJS application development depends on npm, the Node package manager, whic
     > If you happen to have [minit](https://github.com/montagejs/minit), the Montage Initializer, installed (`npm install minit -g`) you can run `minit serve` from within the demo directory to set up a server on demand.
     
 ## A Note about the Source
-You are looking at the nonminified source code of the application. MontageJS application development is divided into a development (creating the app) phase and a production (compiling the app) phase. During production—before submitting the application to the TodoMVC site—we use the Montage Optimizer (Mop) to minify the source code and create "bundles" (files) that consist of the application code and its dependencies, ready for deployment.
+You are looking at the minified source code of the application. MontageJS application development is divided into a development (creating the app) phase and a production (packaging/bundling the app) phase. During production—before submitting the application to the TodoMVC site—we use the Montage Optimizer (Mop) to minify the source code and create "bundles" (files) that consist of the application code and its dependencies, ready for deployment.
 
 ## Credit
 
