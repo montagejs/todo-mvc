@@ -19,12 +19,18 @@ exports.TodoView = Component.specialize({
     },
 
     enterDocument: {
-        value: function (firstTime) {
-            if (firstTime) {
-                this.element.addEventListener('dblclick', this, false);
-                this.element.addEventListener('blur', this, true);
-                this.element.addEventListener('submit', this, false);
-            }
+        value: function () {
+            this.element.addEventListener('dblclick', this, false);
+            this.element.addEventListener('blur', this, true);
+            this.element.addEventListener('submit', this, false);
+        }
+    },
+
+    exitDocument: {
+        value: function () {
+            this.element.removeEventListener('dblclick', this, false);
+            this.element.removeEventListener('blur', this, true);
+            this.element.removeEventListener('submit', this, false);
         }
     },
 
