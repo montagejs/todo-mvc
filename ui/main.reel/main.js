@@ -25,10 +25,36 @@ exports.Main = Component.specialize({
             this.addPathChangeListener('todos.every{completed}', this, 'handleTodosCompletedChanged');
 
             this.defineBindings({
-                'todos': {'<-': 'todoListController.organizedContent'},
+                'todos': {'<-': 'todoListController.content'},
                 'todosLeft': {'<-': 'todos.filter{!completed}'},
                 'todosCompleted': {'<-': 'todos.filter{completed}'}
             });
+        }
+    },
+
+    _selectedFilter: {
+        value: null
+    },
+
+    selectedFilter: {
+        set: function (selectedFilter) {
+            if (this._selectedFilter !== selectedFilter) {
+                this._selectedFilter = selectedFilter;
+
+                if (this.todoListController) {
+                    var filterPath = null;
+
+                    if (selectedFilter) {
+                        filterPath = selectedFilter === "active" ? "!completed" :
+                            selectedFilter === "completed" ? "completed" : null;
+                    }
+
+                    this.todoListController.filterPath = filterPath;
+                }
+            }
+        },
+        get: function () {
+            return this._selectedFilter;
         }
     },
 
@@ -78,6 +104,14 @@ exports.Main = Component.specialize({
                 this._newTodoForm.identifier = 'newTodoForm';
                 this._newTodoForm.addEventListener('submit', this, false);
 
+                if (window.location && window.location.hash) {
+                    var selectedFilter = window.location.hash.substring(2);
+
+                    if (selectedFilter === "active" || selectedFilter === "completed") {
+                        this._filterController.value = selectedFilter;
+                    }
+                }
+
                 this.addEventListener('destroyTodo', this, true);
 
                 window.addEventListener('beforeunload', this, true);
@@ -116,9 +150,11 @@ exports.Main = Component.specialize({
         },
         set: function (value) {
             this._allCompleted = value;
-            this.todoListController.organizedContent.forEach(function (member) {
-                member.completed = value;
-            });
+            if (this.todoListController && this.todoListController.content) {
+                this.todoListController.content.forEach(function (member) {
+                    member.completed = value;
+                });
+            }
         }
     },
 
@@ -160,7 +196,7 @@ exports.Main = Component.specialize({
 
     handleClearCompletedButtonAction: {
         value: function () {
-            var completedTodos = this.todoListController.organizedContent.filter(function (todo) {
+            var completedTodos = this.todoListController.content.filter(function (todo) {
                 return todo.completed;
             });
 

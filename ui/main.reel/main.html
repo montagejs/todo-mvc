@@ -12,7 +12,11 @@
                 "properties": {
                     "element": {"#": "mainComponent"},
                     "_newTodoForm": {"#": "newTodoForm"},
-                    "_newTodoInput": {"#": "newTodoField"}
+                    "_newTodoInput": {"#": "newTodoField"},
+                    "_filterController": {"@": "filterController"}
+                },
+                "bindings": {
+                    "selectedFilter": {"<-": "@filterController.value"}
                 }
             },
 
@@ -92,30 +96,6 @@
                 }
             },
 
-            "completedCount": {
-                "prototype": "montage/ui/text.reel",
-                "properties": {
-                    "element": {"#": "completed-count"}
-                },
-                "bindings": {
-                    "value": {
-                        "<-": "@owner.todosCompleted.length"
-                    }
-                }
-            },
-
-            "clearCompletedContainer": {
-                "prototype": "matte/ui/dynamic-element.reel",
-                "properties": {
-                    "element": {"#": "clear-completed-container"}
-                },
-                "bindings": {
-                    "classList.has('visible')": {
-                        "<-": "@owner.todosCompleted.length"
-                    }
-                }
-            },
-
             "clearCompletedButton": {
                 "prototype": "native/ui/button.reel",
                 "properties": {
@@ -127,7 +107,53 @@
                         "listener": {"@": "owner"},
                         "capture": false
                     }
-                ]
+                ],
+                "bindings": {
+                    "classList.has('visible')": {"<-": "@owner.todosCompleted.length"}
+                }
+            },
+
+            "filterController": {
+                "prototype": "montage/core/radio-button-controller",
+                "properties": {
+                    "value": "all"
+                }
+            },
+
+            "filterAll": {
+                "prototype": "core/radio-button",
+                "properties": {
+                    "element": {"#": "filter-all"},
+                    "radioButtonController": {"@": "filterController"},
+                    "value": "all"
+                },
+                "bindings": {
+                    "classList.has('selected')": {"<-": "@filterAll.checked"}
+                }
+            },
+
+            "filterActive": {
+                "prototype": "core/radio-button",
+                "properties": {
+                    "element": {"#": "filter-active"},
+                    "radioButtonController": {"@": "filterController"},
+                    "value": "active"
+                },
+                "bindings": {
+                    "classList.has('selected')": {"<-": "@filterActive.checked"}
+                }
+            },
+
+            "filterCompleted": {
+                "prototype": "core/radio-button",
+                "properties": {
+                    "element": {"#": "filter-completed"},
+                    "radioButtonController": {"@": "filterController"},
+                    "value": "completed"
+                },
+                "bindings": {
+                    "classList.has('selected')": {"<-": "@filterCompleted.checked"}
+                }
             }
         }
         </script>
@@ -135,28 +161,37 @@
     <body>
         <div data-montage-id="mainComponent">
 
-            <section id="todoapp">
-                    <header id="header">
+            <section class="todoapp">
+                    <header class="header">
                         <h1>todos</h1>
                         <form data-montage-id="newTodoForm">
-                            <input data-montage-id="newTodoField" id="new-todo" placeholder="What needs to be done?" autofocus>
+                            <input data-montage-id="newTodoField" class="new-todo" placeholder="What needs to be done?" autofocus>
                         </form>
                     </header>
-                    <section data-montage-id="main" id="main">
-                        <input data-montage-id="toggle-all" id="toggle-all" type="checkbox">
+                    <section data-montage-id="main" class="main">
+                        <input data-montage-id="toggle-all" id="toggle-all" class="toggle-all" type="checkbox">
                         <label for="toggle-all">Mark all as complete</label>
-                        <ul data-montage-id="todo-list" id="todo-list">
+                        <ul data-montage-id="todo-list" class="todo-list">
                             <li data-montage-id="todoView"></li>
                         </ul>
                     </section>
-                    <footer data-montage-id="footer" id="footer">
-                        <span id="todo-count"><strong data-montage-id="todo-count">0</strong> <span data-montage-id="todo-count-wording">items</span> left</span>
-                        <div data-montage-id="clear-completed-container" id="clear-completed-container">
-                            <button data-montage-id="clear-completed" id="clear-completed">Clear completed (<span data-montage-id="completed-count">0</span>)</button>
-                        </div>
+                    <footer data-montage-id="footer" class="footer">
+                        <span class="todo-count"><strong data-montage-id="todo-count">0</strong> <span data-montage-id="todo-count-wording">items</span> left</span>
+                        <ul class="filters">
+                            <li>
+                                <a data-montage-id="filter-all" href="#/">All</a>
+                            </li>
+                            <li>
+                                <a data-montage-id="filter-active" href="#/active">Active</a>
+                            </li>
+                            <li>
+                                <a data-montage-id="filter-completed" href="#/completed">Completed</a>
+                            </li>
+                        </ul>
+                        <button data-montage-id="clear-completed" class="clear-completed">Clear completed</button>
                     </footer>
                 </section>
-                <footer id="info">
+                <footer class="info">
                     <p>Double-click to edit a todo</p>
                     <p>Created with <a href="http://github.com/montagejs/montage">Montage</a> </p>
                     <p>Source available at <a href="http://github.com/montagejs/todo-mvc">Montage-TodoMVC</a> </p>
