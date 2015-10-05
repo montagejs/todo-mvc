@@ -12,7 +12,11 @@
                 "properties": {
                     "element": {"#": "mainComponent"},
                     "_newTodoForm": {"#": "newTodoForm"},
-                    "_newTodoInput": {"#": "newTodoField"}
+                    "_newTodoInput": {"#": "newTodoField"},
+                    "_filterController": {"@": "filterController"}
+                },
+                "bindings": {
+                    "selectedFilter": {"<-": "@filterController.value"}
                 }
             },
 
@@ -107,6 +111,49 @@
                 "bindings": {
                     "classList.has('visible')": {"<-": "@owner.todosCompleted.length"}
                 }
+            },
+
+            "filterController": {
+                "prototype": "montage/core/radio-button-controller",
+                "properties": {
+                    "value": "all"
+                }
+            },
+
+            "filterAll": {
+                "prototype": "core/radio-button",
+                "properties": {
+                    "element": {"#": "filter-all"},
+                    "radioButtonController": {"@": "filterController"},
+                    "value": "all"
+                },
+                "bindings": {
+                    "classList.has('selected')": {"<-": "@filterAll.checked"}
+                }
+            },
+
+            "filterActive": {
+                "prototype": "core/radio-button",
+                "properties": {
+                    "element": {"#": "filter-active"},
+                    "radioButtonController": {"@": "filterController"},
+                    "value": "active"
+                },
+                "bindings": {
+                    "classList.has('selected')": {"<-": "@filterActive.checked"}
+                }
+            },
+
+            "filterCompleted": {
+                "prototype": "core/radio-button",
+                "properties": {
+                    "element": {"#": "filter-completed"},
+                    "radioButtonController": {"@": "filterController"},
+                    "value": "completed"
+                },
+                "bindings": {
+                    "classList.has('selected')": {"<-": "@filterCompleted.checked"}
+                }
             }
         }
         </script>
@@ -132,13 +179,13 @@
                         <span class="todo-count"><strong data-montage-id="todo-count">0</strong> <span data-montage-id="todo-count-wording">items</span> left</span>
                         <ul class="filters">
                             <li>
-                                <a class="selected" href="#/">All</a>
+                                <a data-montage-id="filter-all" href="#/">All</a>
                             </li>
                             <li>
-                                <a href="#/active">Active</a>
+                                <a data-montage-id="filter-active" href="#/active">Active</a>
                             </li>
                             <li>
-                                <a href="#/completed">Completed</a>
+                                <a data-montage-id="filter-completed" href="#/completed">Completed</a>
                             </li>
                         </ul>
                         <button data-montage-id="clear-completed" class="clear-completed">Clear completed</button>
