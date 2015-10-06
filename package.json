@@ -2,7 +2,7 @@
     "name": "todo-mvc",
     "version": "1.3.0",
     "dependencies": {
-        "montage": "0.15.1",
+        "montage": "0.15.2",
         "matte": "0.2.0",
         "native": "~0.1.2",
         "todomvc-app-css": "^2.0.1",
