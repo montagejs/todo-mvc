@@ -77,7 +77,7 @@ exports.Main = Component.specialize({
                     .deserializeObject()
                     .then(function (todos) {
                         self.todoListController.content = todos;
-                    }).fail(function (error) {
+                    },function (error) {
                         console.error('Could not load saved tasks.');
                         console.debug('Could not deserialize', todoSerialization);
                         console.log(error.stack);
