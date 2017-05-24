@@ -1,13 +1,21 @@
 {
-    "name": "todo-mvc",
-    "version": "1.3.1",
-    "dependencies": {
-        "montage": "montagejs/montage#master",
-        "matte": "0.2.0",
-        "native": "~0.1.2",
-        "todomvc-app-css": "^2.0.1",
-        "todomvc-common": "^1.0.1"
-    },
-    "bundle": [ "ui/main.reel" ],
-    "shard": 4
+  "name": "todo-mvc",
+  "version": "1.3.1",
+  "description": "Sample Todo app using MontageJS",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/montagejs/todo-mvc.git"
+  },
+  "dependencies": {
+    "matte": "^0.3.0",
+    "montage": "^17.0.8",
+    "native": "^0.3.0",
+    "todomvc-app-css": "^2.0.1",
+    "todomvc-common": "^1.0.3"
+  },
+  "bundle": [
+    "ui/main.reel"
+  ],
+  "shard": 4
 }
