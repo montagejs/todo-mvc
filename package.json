@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "matte": "^0.3.0",
-    "montage": "^17.0.8",
+    "montage": "^16.0.7",
     "native": "^0.3.0",
     "todomvc-app-css": "^2.0.1",
     "todomvc-common": "^1.0.3"
