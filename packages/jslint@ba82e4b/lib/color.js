@@ -1,0 +1,1 @@
+function color(r,o){"use strict";return"["+r+"m"+o+"[0m"}function factory(r){"use strict";return function(o){return color(r,o)}}module.exports={bold:factory(1),red:factory(31),green:factory(32),yellow:factory(33),blue:factory(34),grey:factory(90)};

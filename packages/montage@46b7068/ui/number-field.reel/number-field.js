@@ -1,0 +1,1 @@
+var TextInput=require("ui/text-input").TextInput,NumberField=exports.NumberField=TextInput.specialize({hasTemplate:{value:!1}});NumberField.addAttributes({max:{dataType:"number"},min:{dataType:"number"},step:null});

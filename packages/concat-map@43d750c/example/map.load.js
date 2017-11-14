@@ -1,0 +1,1 @@
+montageDefine("43d750c","example/map",{dependencies:["../"],factory:function(e,n,c){var o=e("../"),a=[1,2,3,4,5,6],i=o(a,function(e){return e%2?[e-.1,e,e+.1]:[]});console.dir(i)}});

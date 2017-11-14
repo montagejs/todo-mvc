@@ -1,0 +1,1 @@
+montageDefine("ba82e4b","bin/jslint",{dependencies:["../lib/main.js"],factory:function(n,i,e){var a=n("../lib/main.js");a.runMain(a.parseArgs())}});

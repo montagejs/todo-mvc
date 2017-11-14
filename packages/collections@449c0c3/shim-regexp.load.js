@@ -1,0 +1,1 @@
+montageDefine("449c0c3","shim-regexp",{dependencies:[],factory:function(e,c,n){if(!RegExp.escape){var p=/[-[\]{}()*+?.\\^$|,#\s]/g;RegExp.escape=function(e){return e.replace(p,"\\$&")}}}});

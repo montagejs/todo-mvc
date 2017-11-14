@@ -1,0 +1,1 @@
+montageDefine("42551f5","core/todo",{dependencies:["montage"],factory:function(e,t,n){var i=e("montage").Montage;t.Todo=i.specialize({constructor:{value:function(){this["super"]()}},initWithTitle:{value:function(e){return this.title=e,this}},title:{value:null},completed:{value:!1}})}});

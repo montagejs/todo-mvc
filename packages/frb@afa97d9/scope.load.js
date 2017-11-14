@@ -1,0 +1,1 @@
+montageDefine("afa97d9","scope",{dependencies:[],factory:function(e,t,n){function a(e){this.parent=null,this.value=e}n.exports=a,a.prototype.nest=function(e){var t=Object.create(this);return t.value=e,t.parent=this,t}}});

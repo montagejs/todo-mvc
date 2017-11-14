@@ -1,0 +1,1 @@
+montageDefine("c72f878","index",{dependencies:[],factory:function(e,n,o){"use strict";function t(e){return"/"===e.charAt(0)}function r(e){var n=/^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/]+[^\\\/]+)?([\\\/])?([\s\S]*?)$/,o=n.exec(e),t=o[1]||"",r=Boolean(t&&":"!==t.charAt(1));return Boolean(o[2]||r)}o.exports="win32"===process.platform?r:t,o.exports.posix=t,o.exports.win32=r}});

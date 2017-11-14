@@ -1,0 +1,1 @@
+montageDefine("61412ef","index",{dependencies:[],factory:function(e,r,t){t.exports=Array.isArray||function(e){return"[object Array]"==Object.prototype.toString.call(e)}}});

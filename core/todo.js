@@ -1,0 +1,1 @@
+var Montage=require("montage").Montage;exports.Todo=Montage.specialize({constructor:{value:function(){this["super"]()}},initWithTitle:{value:function(t){return this.title=t,this}},title:{value:null},completed:{value:!1}});

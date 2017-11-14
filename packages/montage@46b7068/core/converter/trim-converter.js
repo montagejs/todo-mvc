@@ -1,0 +1,1 @@
+var Converter=require("./converter").Converter,trim=exports.trim=function(r){return r.replace(/^[\s\xa0]+|[\s\xa0]+$/g,"")};exports.TrimConverter=Converter.specialize({_convert:{value:function(r){if(r&&"string"==typeof r)return trim(r)}},convert:{value:function(r){return this._convert(r)}},revert:{value:function(r){return this._convert(r)}}});

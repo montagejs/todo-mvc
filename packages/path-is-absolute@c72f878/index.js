@@ -1,0 +1,1 @@
+"use strict";function posix(o){return"/"===o.charAt(0)}function win32(o){var e=/^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/]+[^\\\/]+)?([\\\/])?([\s\S]*?)$/,n=e.exec(o),r=n[1]||"",i=Boolean(r&&":"!==r.charAt(1));return Boolean(n[2]||i)}module.exports="win32"===process.platform?win32:posix,module.exports.posix=posix,module.exports.win32=win32;

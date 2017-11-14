@@ -1,0 +1,1 @@
+montageDefine("bf3c0ac","lib/index",{dependencies:["./stringify","./parse","./formats"],factory:function(e,r,s){"use strict";var i=e("./stringify"),t=e("./parse"),a=e("./formats");s.exports={formats:a,parse:t,stringify:i}}});

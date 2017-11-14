@@ -1,0 +1,1 @@
+"use strict";const path=require("path"),mop=require("mop");var srcPath=path.resolve(__dirname),distPath=path.resolve(__dirname,"./builds");mop(srcPath,{minify:!0,buildLocation:distPath}).then(function(t){console.log(t)},function(t){console.error(t)});

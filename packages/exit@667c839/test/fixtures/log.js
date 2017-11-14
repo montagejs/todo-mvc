@@ -1,0 +1,1 @@
+function stdout(r){modes.indexOf("stdout")!==-1&&process.stdout.write("stdout "+r+"\n")}function stderr(r){modes.indexOf("stderr")!==-1&&process.stderr.write("stderr "+r+"\n")}for(var exit=require("../../lib/exit"),errorCode=process.argv[2],max=process.argv[3],modes=process.argv.slice(4),i=0;i<max;i++)stdout(i),stderr(i);exit(errorCode),stdout("fail"),stderr("fail");

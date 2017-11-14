@@ -1,0 +1,1 @@
+montageDefine("449c0c3","fast-set",{dependencies:["./shim","./_fast-set","./listen/property-changes"],factory:function(e,t,s){"use strict";var a=(e("./shim"),e("./_fast-set")),c=e("./listen/property-changes");s.exports=a,Object.addEach(a.prototype,c.prototype)}});

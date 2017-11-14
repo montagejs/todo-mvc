@@ -1,0 +1,1 @@
+montageDefine("ba82e4b","lib/color",{dependencies:[],factory:function(e,n,r){function t(e,n){"use strict";return"["+e+"m"+n+"[0m"}function o(e){"use strict";return function(n){return t(e,n)}}r.exports={bold:o(1),red:o(31),green:o(32),yellow:o(33),blue:o(34),grey:o(90)}}});

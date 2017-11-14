@@ -1,0 +1,1 @@
+montageDefine("aa0acb4","ui/autocomplete/results-list.reel/results-list",{dependencies:["montage/ui/component"],factory:function(e,t,n){var l=e("montage/ui/component").Component;t.ResultsList=l.specialize({textPropertyPath:{value:null},contentController:{value:null},activeIndexes:{value:null}})}});

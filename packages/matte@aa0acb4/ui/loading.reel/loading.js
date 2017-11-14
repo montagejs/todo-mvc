@@ -1,0 +1,1 @@
+var Component=require("montage/ui/component").Component;exports.Loading=Component.specialize({_loading:{value:null},loading:{get:function(){return this._loading},set:function(n){this._loading!==n&&(this._loading=n,this.needsDraw=!0)}},draw:{value:function(){var n=this.element.classList,e=n.contains("animate");this.loading?e||n.add("animate"):e&&n.remove("animate")}}});

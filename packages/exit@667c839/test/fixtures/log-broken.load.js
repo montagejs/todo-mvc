@@ -1,0 +1,1 @@
+montageDefine("667c839","test/fixtures/log-broken",{dependencies:[],factory:function(e,r,s){function t(e){c.indexOf("stdout")!==-1&&process.stdout.write("stdout "+e+"\n")}function o(e){c.indexOf("stderr")!==-1&&process.stderr.write("stderr "+e+"\n")}for(var n=process.argv[2],i=process.argv[3],c=process.argv.slice(4),f=0;f<i;f++)t(f),o(f);process.exit(n),t("fail"),o("fail")}});

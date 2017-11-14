@@ -1,0 +1,1 @@
+var AbstractRadioButton=require("montage/ui/base/abstract-radio-button").AbstractRadioButton;exports.RadioButton=AbstractRadioButton.specialize({hasTemplate:{value:!1}});

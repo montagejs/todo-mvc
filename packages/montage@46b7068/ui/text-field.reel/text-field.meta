@@ -1,0 +1,76 @@
+{
+    "blueprint_textfield_updateOnInput": {
+        "prototype": "core/meta/property-blueprint",
+        "properties": {
+            "name": "updateOnInput",
+            "blueprint": {
+                "@": "root"
+            },
+            "cardinality": 1,
+            "mandatory": false,
+            "denyDelete": false,
+            "readOnly": false,
+            "valueType": "boolean",
+            "enumValues": [],
+            "helpKey": ""
+        }
+    },
+    "maxlength_property": {
+        "prototype": "core/meta/property-blueprint",
+        "properties": {
+            "name": "maxlength",
+            "valueType": "number",
+            "blueprint": {
+                "@": "root"
+            }
+        }
+    },
+    "blueprint_control_reference": {
+        "prototype": "core/meta/blueprint-reference",
+        "properties": {
+            "valueReference": {
+                "blueprintName": "Control",
+                "prototypeName": "Control",
+                "blueprintModule": {
+                    "%": "ui/control.meta"
+                }
+            }
+        }
+    },
+    "root": {
+        "prototype": "core/meta/module-blueprint",
+        "properties": {
+            "name": "text-field",
+            "customPrototype": false,
+            "parent": {
+                "@": "blueprint_control_reference"
+            },
+            "propertyDescriptors": [
+                {
+                    "@": "blueprint_textfield_updateOnInput"
+                },
+                {
+                    "@": "maxlength_property"
+                }
+            ],
+            "propertyDescriptorGroups": {
+                "text-field": [
+                    {
+                        "@": "blueprint_textfield_updateOnInput"
+                    },
+                    {
+                        "@": "maxlength_property"
+                    }
+                ]
+            },
+            "propertyValidationRules": {},
+            "blueprintModule": {
+                "%": "ui/text-field.reel/text-field.meta"
+            },
+            "exportName": "TextField",
+            "module": {
+                "%": "ui/text-field.reel"
+            }
+        }
+    }
+}

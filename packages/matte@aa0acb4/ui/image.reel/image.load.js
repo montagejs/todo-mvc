@@ -1,0 +1,1 @@
+montageDefine("aa0acb4","ui/image.reel/image",{dependencies:["montage/ui/base/abstract-image"],factory:function(a,e,t){var i=a("montage/ui/base/abstract-image").AbstractImage;e.Image=i.specialize({hasTemplate:{value:!1},constructor:{value:function(){this["super"](),this.classList.add("matte-image")}}})}});

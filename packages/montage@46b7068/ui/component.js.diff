@@ -1,0 +1,492 @@
+diff --git i/ui/component.js w/ui/component.js
+index 7379fe5c..99bdc37f 100644
+--- i/ui/component.js
++++ w/ui/component.js
+@@ -1,4 +1,4 @@
+-/*global Element, console */
++/*global Element */
+ /**
+  * @module montage/ui/component
+  * @requires montage
+@@ -30,16 +30,6 @@ var Montage = require("../core/core").Montage,
+     Map = require("collections/map"),
+     Set = require("collections/set");
+
+-
+-function loggerToString (object) {
+-    if (!object) {
+-        return "NIL";
+-    }
+-    //jshint -W106
+-    return object._montage_metadata.objectName + ":" + Object.hash(object) + " id: " + object.identifier;
+-    //jshint +W106
+-}
+-
+ /**
+  * @const
+  * @default
+@@ -125,7 +115,7 @@ var CssBasedAnimation = Montage.specialize({
+                 i, j;
+
+             if (this.component && this.component.element) {
+-                computedStyle = global.getComputedStyle(this.component.element);
++                computedStyle = global.getComputedStyle(this.component.element)
+                 for (i = 0; i < this._animationAndTransitionProperties.length; i++) {
+                     durations = this._parseComputedStyleTimeValue(
+                         computedStyle.getPropertyValue(this._animationAndTransitionProperties[i] + "-duration")
+@@ -156,7 +146,7 @@ var CssBasedAnimation = Montage.specialize({
+                     // very few miliseconds in desktop to a couple of hundreds in mobile
+                     // devices, so we are adding 300 miliseconds as a safety value that
+                     // should cover the most of the cases.
+-                    maxTime += 0.3;
++                    maxTime += .3;
+                 }
+             }
+             return maxTime;
+@@ -306,8 +296,6 @@ var CssBasedAnimation = Montage.specialize({
+
+ });
+
+-var rootComponent;
+-
+ /**
+  * @class Component
+  * @classdesc Base class for all Montage components.
+@@ -584,7 +572,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+             return this._element;
+         },
+         set: function (value) {
+-            if (value === null || value === undefined) {
++            if (value == null) {
+                 console.warn("Tried to set element of ", this, " to ", value);
+                 return;
+             }
+@@ -680,7 +668,9 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+     getDomArgumentNames: {
+         value: function () {
+             if (this._domArgumentNames === void 0) {
+-                this._domArgumentNames = this._domArguments ? Object.keys(this._domArguments) : this._sharedEmptyArray;
++                this._domArgumentNames = this._domArguments
++                    ? Object.keys(this._domArguments)
++                    : this._sharedEmptyArray;
+             }
+             return this._domArgumentNames;
+         }
+@@ -769,15 +759,14 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+     getTemplateArgumentElement: {
+         value: function (argumentName) {
+             var template = this._ownerDocumentPart.template,
+-                ownerModuleId,
+                 element,
+                 range,
+-                label,
+                 argument;
+
++            //jshint -W106
+             if (global._montage_le_flag) {
+-                ownerModuleId = this.ownerComponent._montage_metadata.moduleId;
+-                label = this._montage_metadata.label;
++                var ownerModuleId = this.ownerComponent._montage_metadata.moduleId;
++                var label = this._montage_metadata.label;
+             }
+
+             if (argumentName === "*") {
+@@ -797,6 +786,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                         argumentName);
+                 }
+             }
++            //jshint +W106
+
+             return argument;
+         }
+@@ -949,7 +939,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                 aParentNode,
+                 eventManager = this.eventManager;
+             if (anElement) {
+-                while ((aParentNode = anElement.parentNode) && !eventManager.eventHandlerForElement(aParentNode)) {
++                while ((aParentNode = anElement.parentNode) != null && eventManager.eventHandlerForElement(aParentNode) == null) {
+                     anElement = aParentNode;
+                 }
+                 return aParentNode ? eventManager.eventHandlerForElement(aParentNode) : this._alternateParentComponent;
+@@ -1588,8 +1578,8 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                             var promises,
+                                 childComponents = self._childComponents,
+                                 childComponent;
+-                            if (childComponents && childComponents.length) {
+-                                promises = [];
++                            if(childComponents && childComponents.length) {
++                                promises = []
+                                 for (var i = 0; (childComponent = childComponents[i]); i++) {
+                                     promises.push(childComponent.loadComponentTree());
+                                 }
+@@ -1733,17 +1723,15 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                 templateObjects = this._templateObjects;
+
+             for (var label in objects) {
+-                if (objects.hasOwnProperty(label)) {
+-                    var object = objects[label];
++                var object = objects[label];
+
+-                    if (typeof object === "object" && object !== null) {
+-                        if (!Component.prototype.isPrototypeOf(object) || object === this ||
+-                            object.parentComponent === this) {
+-                            templateObjects[label] = object;
+-                        } else {
+-                            descriptor.get = this._makeTemplateObjectGetter(this, label, object);
+-                            Object.defineProperty(templateObjects, label, descriptor);
+-                        }
++                if (typeof object === "object" && object != null) {
++                    if (!Component.prototype.isPrototypeOf(object) || object === this ||
++                        object.parentComponent === this) {
++                        templateObjects[label] = object;
++                    } else {
++                        descriptor.get = this._makeTemplateObjectGetter(this, label, object);
++                        Object.defineProperty(templateObjects, label, descriptor);
+                     }
+                 }
+             }
+@@ -1769,7 +1757,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                     // the tree and found out.
+                     if (components.length === 1) {
+                         component = components[0];
+-                        while ((component = component.parentComponent)) {
++                        while (component = component.parentComponent) {
+                             if (component === owner) {
+                                 // we got to the owner without ever hitting a component
+                                 // that repeats its child components, we can
+@@ -2022,7 +2010,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+
+     _getArray: {
+         value: function () {
+-            if (this._arrayObjectPool.pool === null) {
++            if (this._arrayObjectPool.pool == null) {
+                 this._arrayObjectPool.pool = [];
+                 for (var i = 0; i < this._arrayObjectPool.size; i++) {
+                     this._arrayObjectPool.pool[i] = [];
+@@ -2067,7 +2055,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                 this.originalElement = this.element;
+             }
+             if (this.needsDraw) {
+-                this.rootComponent.addToDrawCycle(this);
++                rootComponent.addToDrawCycle(this);
+             }
+
+             if (this._needsEnterDocument) {
+@@ -2240,8 +2228,9 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+             if (!argumentNames || argumentNames.length === 0) {
+                 this._leTagStarArgument(ownerModuleId, label, this.element);
+             } else {
+-                for (var i = 0, name; (name = argumentNames[i]); i++) {
+-                    this._leTagNamedArgument(ownerModuleId, label, this._domArguments[name], name);
++                for (var i = 0, name; name = /*assign*/argumentNames[i]; i++) {
++                    this._leTagNamedArgument(ownerModuleId, label,
++                        this._domArguments[name], name);
+                 }
+             }
+         }
+@@ -2257,7 +2246,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                     if (element.nodeType === Node.ELEMENT_NODE) {
+                         break;
+                     }
+-                } while ((element = element.nextSibling));
++                } while (element =/*assign*/ element.nextSibling);
+             }
+
+             return element;
+@@ -2274,7 +2263,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                     if (element.nodeType === Node.ELEMENT_NODE) {
+                         break;
+                     }
+-                } while ((element = element.previousSibling));
++                } while (element =/*assign*/ element.previousSibling);
+             }
+
+             return element;
+@@ -2319,57 +2308,55 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+             }
+
+             for (var key in parameters) {
+-                if (parameters.hasOwnProperty(key)) {
+-                    parameterElement = parameters[key];
+-                    argument = templateArguments ? templateArguments[key] : void 0;
+-
+-                    if ((key === "*") || (key === "each")) {
+-                        if (this._element.childElementCount === 0) {
+-                         //We're missing an argument, we're going to check if we have a default
+-                             if (parameterElement && parameterElement.childElementCount > 0) {
+-                                 range = this._element.ownerDocument.createRange();
+-                                 range.selectNodeContents(parameterElement);
+-                                 parameterElement.parentNode.replaceChild(range.extractContents(), parameterElement);
+-
+-                                //Should we re-construct the structure from the default?
+-                                //  if(!templateArguments) {
+-                                //      templateArguments = this._domArguments = {"*":};
+-                                //
+-                                //  }
+-                             } else {
+-                                //  throw new Error('No arguments provided for ' +
+-                                //  this.templateModuleId + '. Arguments needed for data-param: ' +
+-                                //  key + '.');
+-                                //Remove the data-parm="*" element
+-                                parameterElement.parentNode.removeChild(parameterElement);
+-                             }
+-                        } else {
+-                            range = this._element.ownerDocument.createRange();
+-                            range.selectNodeContents(this._element);
+-                            contents = range.extractContents();
+-                        }
++                parameterElement = parameters[key];
++                argument = templateArguments ? templateArguments[key] : void 0;
++
++                if ((key === "*") || (key === "each")) {
++                    if (this._element.childElementCount === 0) {
++                     //We're missing an argument, we're going to check if we have a default
++                         if (parameterElement && parameterElement.childElementCount > 0) {
++                             range = this._element.ownerDocument.createRange();
++                             range.selectNodeContents(parameterElement);
++                             parameterElement.parentNode.replaceChild(range.extractContents(), parameterElement);
++
++                            //Should we re-construct the structure from the default?
++                            //  if(!templateArguments) {
++                            //      templateArguments = this._domArguments = {"*":};
++                            //
++                            //  }
++                         } else {
++                            //  throw new Error('No arguments provided for ' +
++                            //  this.templateModuleId + '. Arguments needed for data-param: ' +
++                            //  key + '.');
++                            //Remove the data-parm="*" element
++                            parameterElement.parentNode.removeChild(parameterElement);
++                         }
+                     } else {
+-                        contents = argument;
++                        range = this._element.ownerDocument.createRange();
++                        range.selectNodeContents(this._element);
++                        contents = range.extractContents();
+                     }
++                } else {
++                    contents = argument;
++                }
+
+-                    if (contents) {
+-                        var i, length;
++                if (contents) {
++                    var i, length;
+
+-                        if (contents instanceof Element) {
+-                            var classList = parameterElement.classList,
+-                                contentsClassList = contents.component ? contents.component.classList : contents.classList;
++                    if (contents instanceof Element) {
++                        var classList = parameterElement.classList,
++                            contentsClassList = contents.component ? contents.component.classList : contents.classList;
+
+-                            for (i = 0, length = classList.length; i < length; i++) {
+-                                contentsClassList.add(classList[i]);
+-                            }
++                        for (i = 0, length = classList.length; i < length; i++) {
++                            contentsClassList.add(classList[i]);
+                         }
++                    }
+
+-                        components = this._findAndDetachComponents(contents);
+-                        parameterElement.parentNode.replaceChild(contents, parameterElement);
++                    components = this._findAndDetachComponents(contents);
++                    parameterElement.parentNode.replaceChild(contents, parameterElement);
+
+-                        for (i = 0; (component = components[i]); i++) {
+-                            component.attachToParentComponent();
+-                        }
++                    for (i = 0; (component = components[i]); i++) {
++                        component.attachToParentComponent();
+                     }
+                 }
+             }
+@@ -3255,7 +3242,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                             // only set the value if a value has not already been set by binding
+                             if(typeof this._elementAttributeValues[name] === 'undefined') {
+                                 this._elementAttributeValues[name] = value;
+-                                if( (typeof this[name] === 'undefined') || this[name] === null) {
++                                if( (typeof this[name] === 'undefined') || this[name] == null) {
+                                     this[name] = value;
+                                 }
+                             }
+@@ -3272,7 +3259,7 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+
+                     if(typeof this._elementAttributeValues.textContent === 'undefined') {
+                         this._elementAttributeValues.textContent = textContent;
+-                        if (this.textContent === null) {
++                        if( this.textContent == null) {
+                             this.textContent = textContent;
+                         }
+                     }
+@@ -3283,12 +3270,10 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                 //Benoit: This shouldn't be needed on each instance if properly set on the prototype TODO #memory #performance improvement
+                 if (this._elementAttributeDescriptors) {
+                     for (attributeName in this._elementAttributeDescriptors) {
+-                        if (this._elementAttributeDescriptors.hasOwnProperty(attributeName)) {
+-                            descriptor = this._elementAttributeDescriptors[attributeName];
+-                            var _name = "_"+attributeName;
+-                            if (this[_name] === null && descriptor !== null && "value" in descriptor) {
+-                                this[_name] = descriptor.value;
+-                            }   
++                        descriptor = this._elementAttributeDescriptors[attributeName];
++                        var _name = "_"+attributeName;
++                        if (this[_name] === null && descriptor !== null && "value" in descriptor) {
++                            this[_name] = descriptor.value;
+                         }
+                     }
+                 }
+@@ -3516,14 +3501,8 @@ var Component = exports.Component = Target.specialize(/** @lends Component.proto
+                     // If the set value is different to the current one,
+                     // update it here, and set it to be updated on the
+                     // element in the next draw cycle.
+-                    if(typeof value !== 'undefined' && (this[attributeName] !== value)) {
+-
+-                        if (setter) {
+-                            setter.call(this, value);
+-                        } else {
+-                            this[attributeName] = value;                            
+-                        }
+-
++                    if((typeof value !== 'undefined') && this[attributeName] !== value) {
++                        setter ? setter.call(this,value) : (this[attributeName] = value);
+                         this._elementAttributeValues[name] = value;
+                         if (!fromInput) {
+                             this.needsDraw = true;
+@@ -3842,7 +3821,8 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+      * @function
+      */
+     requestAnimationFrame: {
+-        value: (global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame ||  global.msRequestAnimationFrame || setTimeout),
++        value: (global.requestAnimationFrame || global.webkitRequestAnimationFrame
++             || global.mozRequestAnimationFrame ||  global.msRequestAnimationFrame || setTimeout),
+         enumerable: false
+     },
+
+@@ -3851,7 +3831,8 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+      * @function
+      */
+     cancelAnimationFrame: {
+-        value: (global.cancelAnimationFrame ||  global.webkitCancelAnimationFrame || global.mozCancelAnimationFrame || global.msCancelAnimationFrame || clearTimeout),
++        value: (global.cancelAnimationFrame ||  global.webkitCancelAnimationFrame
++             || global.mozCancelAnimationFrame || global.msCancelAnimationFrame || clearTimeout),
+         enumerable: false
+     },
+
+@@ -3879,15 +3860,16 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+             var ns = {};
+             var os = {};
+
++            //jshint -W116
+             for (var i = 0; i < n.length; i++ ) {
+-                if (ns[ n[i] ] === null ) {
++                if (ns[ n[i] ] == null ) {
+                     ns[ n[i] ] = { rows: [], o: null };
+                 }
+                 ns[ n[i] ].rows.push( i );
+             }
+
+             for (i = 0; i < o.length; i++ ) {
+-                if (os[ o[i] ] === null ) {
++                if (os[ o[i] ] == null ) {
+                     os[ o[i] ] = { rows: [], n: null };
+                 }
+                 os[ o[i] ].rows.push( i );
+@@ -3901,9 +3883,9 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+             }
+
+             for (i = 0; i < n.length - 1; i++ ) {
+-                if (n[i].text !== null && n[i+1].text === null &&
+-                    n[i].row + 1 < o.length && o[ n[i].row + 1 ].text === null &&
+-                    n[i+1] === o[ n[i].row + 1 ]
++                if (n[i].text != null && n[i+1].text == null &&
++                    n[i].row + 1 < o.length && o[ n[i].row + 1 ].text == null &&
++                    n[i+1] == o[ n[i].row + 1 ]
+                 ) {
+                     n[i+1] = { text: n[i+1], row: n[i].row + 1 };
+                     o[n[i].row+1] = { text: o[n[i].row+1], row: i + 1 };
+@@ -3911,14 +3893,15 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+             }
+
+             for (i = n.length - 1; i > 0; i-- ) {
+-                if (n[i].text !== null && n[i-1].text === null &&
+-                    n[i].row > 0 && o[ n[i].row - 1 ].text === null &&
+-                    n[i-1] === o[ n[i].row - 1 ]
++                if (n[i].text != null && n[i-1].text == null &&
++                    n[i].row > 0 && o[ n[i].row - 1 ].text == null &&
++                    n[i-1] == o[ n[i].row - 1 ]
+                 ) {
+                     n[i-1] = { text: n[i-1], row: n[i].row - 1 };
+                     o[n[i].row-1] = { text: o[n[i].row-1], row: i - 1 };
+                 }
+             }
++            //jshint +W116
+
+             return { o: o, n: n };
+         }
+@@ -3968,9 +3951,9 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+     addStyleSheetsFromTemplate: {
+         value: function(template) {
+             if(!this._addedStyleSheetsByTemplate.has(template)) {
+-                var resources = template.getResources(), 
+-                    ownerDocument = this.element.ownerDocument, 
+-                    styles = resources.createStylesForDocument(ownerDocument);
++                var resources = template.getResources()
++                    , _document = this.element.ownerDocument
++                    , styles = resources.createStylesForDocument(_document);
+
+                 for (var i = 0, style; (style = styles[i]); i++) {
+                     this.addStylesheet(style);
+@@ -3992,9 +3975,9 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+      */
+     drawStylesheets: {
+         value: function () {
+-            var stylesheet,
++            var documentResources = this._documentResources,
+                 stylesheets = this._stylesheets,
+-                documentResources = this._documentResources,
++                stylesheet,
+                 documentHead = documentResources._document.head,
+                 bufferDocumentFragment = this._bufferDocumentFragment;
+
+@@ -4080,11 +4063,11 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+                     var out = this._diff(this._oldSource.split("\n"), newSource.split("\n"));
+                     for (var i = 0; i < out.n.length; i++) {
+                         // == null ok. Is also checking for undefined
+-                        if (out.n[i].text === null) {
++                        if (out.n[i].text == null) {
+                             warning.push('+ ' + out.n[i]);
+                         } else {
+                             // == null ok. Is also checking for undefined
+-                            for (var n = out.n[i].row + 1; n < out.o.length && out.o[n].text === null; n++) {
++                            for (var n = out.n[i].row + 1; n < out.o.length && out.o[n].text == null; n++) {
+                                 warning.push('- ' + out.o[n]);
+                             }
+                         }
+@@ -4148,7 +4131,7 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+             if (needsDrawListIndex.has(component)) {
+                 // Requesting a draw of a component that has already been drawn in the current cycle
+                 if (drawLogger.isDebug) {
+-                    if(this !== this.rootComponent) {
++                    if(this !== rootComponent) {
+                         drawLogger.debug(loggerToString(this) + " added to the draw cycle twice, this should not happen.");
+                     }
+                 }
+@@ -4317,9 +4300,16 @@ var RootComponent = Component.specialize( /** @lends RootComponent.prototype */{
+     }
+ });
+
+-rootComponent = new RootComponent().init();
++var rootComponent = new RootComponent().init();
+ exports.__root__ = rootComponent;
+
++function loggerToString (object) {
++    if (!object) return "NIL";
++    //jshint -W106
++    return object._montage_metadata.objectName + ":" + Object.hash(object) + " id: " + object.identifier;
++    //jshint +W106
++}
++
+ //https://github.com/kangax/html-minifier/issues/63
+ //http://www.w3.org/TR/html-markup/global-attributes.html
+ Component.addAttributes( /** @lends module:montage/ui/control.Control# */ {

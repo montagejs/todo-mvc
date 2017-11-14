@@ -1,0 +1,1 @@
+var Component=require("ui/component").Component,Image=exports.Image=Component.specialize({hasTemplate:{value:!1}});Image.addAttributes({alt:null,height:null,src:null,width:null});

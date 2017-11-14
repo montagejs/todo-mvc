@@ -1,0 +1,1 @@
+montageDefine("aa0acb4","ui/select.reel/select",{dependencies:["native/ui/select.reel"],factory:function(e,t,a){var c=e("native/ui/select.reel").Select;t.Select=c.specialize({hasTemplate:{value:!0},constructor:{value:function(){this["super"](),this.classList.add("matte-Select")}}})}});
