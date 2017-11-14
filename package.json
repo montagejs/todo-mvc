@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "matte": "^0.3.0",
-    "montage": "^17.0.8",
+    "montage": "^17.0.11",
     "native": "^0.3.0",
     "todomvc-app-css": "^2.0.1",
     "todomvc-common": "^1.0.3"
@@ -17,5 +17,15 @@
   "bundle": [
     "ui/main.reel"
   ],
-  "shard": 4
+  "shard": 4,
+  "devDependencies": {
+    "minit": "^0.5.7",
+    "montage-testing": "~0.4.3",
+    "mop": "^16.0.1"
+  },
+  "scripts": {
+    "build": "mop .",
+    "start": "minit serve",
+    "start:dist": "minit serve -r dist"
+  }
 }
